@@ -1,9 +1,21 @@
 import { NoteForm } from "./NoteForm";
-export const NewNote: React.FC = () => {
+import Tag = Note.Tag;
+import NoteData = Note.NoteData;
+
+type NewNoteProps = {
+  onSubmit: (data: NoteData) => void;
+  onAddTag: (tag: Tag) => void;
+  availableTags: Tag[];
+};
+export function NewNote({ onSubmit, onAddTag, availableTags }: NewNoteProps) {
   return (
     <>
       <h1 className="margin mb-6">NewNote</h1>
-      <NoteForm />
+      <NoteForm
+        onSubmit={onSubmit}
+        onAddTag={onAddTag}
+        availableTags={availableTags}
+      />
     </>
   );
-};
+}
