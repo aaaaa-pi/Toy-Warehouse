@@ -40,41 +40,32 @@ export function NoteForm({
   return (
     <>
       <Form layout="vertical">
-        <Row>
-          <Space size="large">
-            <Col>
-              <Form.Item name="title" label="标题">
-                <Input size="large" ref={titleRef} />
-              </Form.Item>
-            </Col>
-            <Col>
-              <Form.Item name="tags" label="标签">
-                <CreatableReactSelect
-                  onCreateOption={(label) => {
-                    const newTag = { id: uuidV4(), label };
-                    onAddTag(newTag);
-                    setSelectedTags((prev) => [...prev, newTag]);
-                  }}
-                  value={selectedTags.map((tag) => {
-                    return { label: tag.label, value: tag.id };
-                  })}
-                  options={availableTags.map((tag) => {
-                    return { label: tag.label, value: tag.id };
-                  })}
-                  onChange={(tags) => {
-                    setSelectedTags(
-                      tags.map((tag) => {
-                        return { label: tag.label, id: tag.value };
-                      })
-                    );
-                  }}
-                  isMulti
-                  className="width w-72 h-10"
-                />
-              </Form.Item>
-            </Col>
-          </Space>
-        </Row>
+        <Form.Item name="title" label="标题">
+          <Input size="large" ref={titleRef} />
+        </Form.Item>
+        <Form.Item name="tags" label="标签">
+          <CreatableReactSelect
+            onCreateOption={(label) => {
+              const newTag = { id: uuidV4(), label };
+              onAddTag(newTag);
+              setSelectedTags((prev) => [...prev, newTag]);
+            }}
+            value={selectedTags.map((tag) => {
+              return { label: tag.label, value: tag.id };
+            })}
+            options={availableTags.map((tag) => {
+              return { label: tag.label, value: tag.id };
+            })}
+            onChange={(tags) => {
+              setSelectedTags(
+                tags.map((tag) => {
+                  return { label: tag.label, id: tag.value };
+                })
+              );
+            }}
+            isMulti
+          />
+        </Form.Item>
         <Form.Item name="markdown" label="内容">
           <TextArea rows={15} ref={markdownRef}></TextArea>
         </Form.Item>

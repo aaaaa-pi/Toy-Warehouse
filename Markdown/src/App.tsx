@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useLocalStorage } from "./utils/useLocalStorage";
 import { NewNote } from "./Pages/NewNote";
+import { NoteList } from "./Pages/NoteList";
 import { useMemo } from "react";
 import { v4 as uuidV4 } from "uuid";
 import RawNote = Note.RawNote;
@@ -33,9 +34,9 @@ function App() {
   }
 
   return (
-    <div className="container m-8">
+    <div className="container mx-auto">
       <Routes>
-        <Route path="/" element={<h1>Home</h1>} />
+        <Route path="/" element={<NoteList />} />
         <Route
           path="/new"
           element={
