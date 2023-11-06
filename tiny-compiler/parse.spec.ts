@@ -1,5 +1,5 @@
 import {test, expect} from "vitest";
-import { NodeTypes } from "./parse";
+import { NodeTypes } from "./ast.ts";
 import { TokenTypes } from "./tokenizer";
 import { parser } from "./parse";
 test("parse", () =>{
