@@ -37,13 +37,15 @@ const password = computed({
 });
 
 const submit = async(user) => {
+  console.log(user);
   if(user.id){
-    await useFetch("http://localhost:4000/users/" + user.id,
+    await useFetch("http://localhost:4000/users/updateUser/" + user.id,
     { 
       method: 'put',
       body:{
         name: user.name,
-        email: user.email
+        email: user.email,
+        password: user.password
       }
     })
   } else {
@@ -67,12 +69,12 @@ const resetUser = (user) => {
   userStore.setPassword(user.password)
 }
 const loadData = async() => {
-  const { data, execute } = useFetch("http://localhost:4000/users/",
+  useFetch("http://localhost:4000/users/",
     { 
       method: 'get',
+    }).then((res) => {
+      usersStore.storeData(res.data.value)
     })
-  await execute(); // 确保数据加载完成
-  usersStore.storeData(JSON.stringify(data.value))
 }
 </script>
 

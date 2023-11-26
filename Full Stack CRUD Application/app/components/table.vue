@@ -1,7 +1,7 @@
 <template>
     <div>
       <h2>Table</h2>
-      <v-data-table :headers="headers" :items="items">
+      <v-data-table :headers="headers" :items="users">
         <template v-slot:[`item.edit`]="{ item }">
           <v-btn color="success" @click="editItem(item)"> Edit </v-btn>
         </template>
@@ -17,38 +17,37 @@ import {useUsers} from "../store/users"
 const userStore = useUserStore();
 const usersStore = useUsers();
 const headers = [
-    { title: "Id", value: "id" },
+    { title: "Id", value: "_id" },
     { title: "Name", value: "name" },
     { title: "Email", value: "email" },
     { title: "edit", value: "edit" },
     { title: "delete", value: "delete" },
 ]
-const items = [
-    {
-      name: 'African Elephant',
-      species: 'Loxodonta africana',
-      diet: 'Herbivore',
-      habitat: 'Savanna, Forests',
-    },
-]
-const users = computed(() => {return usersStore.data})
+
+const users = computed(() => {return JSON.parse(JSON.stringify(usersStore.data))})
 const loadData = async() => {
-  const data = await useFetch("http://localhost:4000/users/",
+  useFetch("http://localhost:4000/users/",
     { 
       method: 'get',
-    }).data
-  usersStore.storeData(data)
+    }).then((res) => {
+      usersStore.storeData(res.data.value)
+    })
 }
-const deleteItem = async(id) => {
-    await useFetch("http://localhost:4000/users/deleteUser/" + id,
+const deleteItem = async(item) => {
+    await useFetch("http://localhost:4000/users/deleteUser/" + item._id,
     { 
       method: 'delete',
     })
+    loadData();
 }
 const editItem = async(user) => {
-  userStore.setId(user.id)
+  userStore.setId(user._id)
   userStore.setName(user.name)
   userStore.setEmail(user.email)
   userStore.setPassword(user.password)
 }
+onMounted(async() => {
+  await nextTick();
+  loadData();
+});
 </script>
