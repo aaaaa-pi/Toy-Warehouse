@@ -16,6 +16,9 @@
         type="radio"
         name="rating"
         :key="item"
+        :class="{active: 6 - item === myRate}"
+        :value="6 - item"
+        v-model="myRate"
       />
     </div>
   </div>
