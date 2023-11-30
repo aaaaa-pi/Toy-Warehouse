@@ -30,7 +30,7 @@ const path = route.path;
 const emojis = ['🤔️', '💩', '👎', '😄', '😍', '🎉'];
 const emojiWrapper = ref<HTMLDivElement>();
 const myRate = ref<number>(0);
-const {data:rateDate,pending} = await useFetch('/api/rate',{
+const {data:rateData,pending} = await useFetch('/api/rate',{
   query:{
     uid: path,
   },
