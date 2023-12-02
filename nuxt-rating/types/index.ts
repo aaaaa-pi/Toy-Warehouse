@@ -5,3 +5,9 @@ export type RateData = {
     r4: number;
     r5: number;
 }
+
+export type currentRate = {
+    rate: number;
+    total: number;
+    rounded: number;
+}
