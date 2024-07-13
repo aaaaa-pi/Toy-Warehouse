@@ -1,7 +1,12 @@
 import { image } from "../services/images"
 import config from "../config"
-export default class straw {
-    constructor(protected canvas: CanvasRenderingContext2D,protected position: {x: number,y: number}){
-        this.canvas.drawImage(image.get('straw')!,position.x,position.y,config.model.width,config.model.height)
+
+type mapKey = keyof typeof config.images
+export default abstract class modelAbstract {
+    abstract render(): void
+    constructor(protected canvas: CanvasRenderingContext2D,protected x: number,protected y: number){}
+
+    protected draw(modelName: mapKey) {
+        this.canvas.drawImage(image.get(modelName)!,this.x,this.y,config.model.width,config.model.height)
     }
 }
