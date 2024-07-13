@@ -1,5 +1,4 @@
 import config from "../config";
-import { image } from "../services/images";
 
 export default abstract class canvasAbstract {
     protected items = []
@@ -12,6 +11,7 @@ export default abstract class canvasAbstract {
        this.createCanvas()
     }
 
+    // 创建画布
     protected createCanvas() {
        this.el.width = config.canvas.width
        this.el.height = config.canvas.height
@@ -19,9 +19,9 @@ export default abstract class canvasAbstract {
        this.app.insertAdjacentElement('afterbegin',this.el)
     }
 
-    protected drawModel(num: number) {
+    protected drawModel(num: number,model: any) {
         this.positionCollextion(num).forEach(position => {
-            this.canvas.drawImage(image.get('straw')!,position.x,position.y,config.model.width,config.model.height)
+            new model(this.canvas,position)
         })          
     }
 
@@ -40,6 +40,8 @@ export default abstract class canvasAbstract {
         }
         return collection
     }
+
+    // 随机生成坐标
     protected position(){
         return {
             x: Math.floor(Math.random() * (config.canvas.width / config.model.width)) * config.model.width,

@@ -10,7 +10,7 @@ export default {
         height: 30
     },
     straw: {
-        num: 20
+        num: 50
     },
     images: {
         straw,
