@@ -1,4 +1,5 @@
 import config from "../config";
+import position from "../services/position"
 
 export default abstract class canvasAbstract {
     protected items = []
@@ -20,33 +21,9 @@ export default abstract class canvasAbstract {
     }
 
     protected drawModel(num: number,model: ModelConstructor) {
-        this.positionCollextion(num).forEach(position => {
+        position.getCollextion(num).forEach(position => {
             const instance = new model(this.canvas,position.x,position.y)
             instance.render()
         })          
-    }
-
-    // 批量生成唯一坐标
-    protected positionCollextion(num: number){
-        const collection = [] as {x:number,y: number}[]
-        for(let i = 0; i < num; i ++){
-            while(true){
-                const position = this.position()
-                const exists = collection.some(c => c.x == position.x && c.y == position.y)
-                if(!exists){
-                    collection.push(position)
-                    break
-                }
-            }
-        }
-        return collection
-    }
-
-    // 随机生成坐标
-    protected position(){
-        return {
-            x: Math.floor(Math.random() * (config.canvas.width / config.model.width)) * config.model.width,
-            y: Math.floor(Math.random() * (config.canvas.height / config.model.height))* config.model.height
-        }
     }
 }
